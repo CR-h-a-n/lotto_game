@@ -1,5 +1,6 @@
 import random
 
+
 class Card:
 
     def __init__(self):
@@ -9,11 +10,11 @@ class Card:
         self.line1 = []
         self.line2 = []
 
-    def create_card(self):
+    def create_card(self, sim_empt):
         for index in range(9):
-            self.line0.append(sim_empty*2)
-            self.line1.append(sim_empty*2)
-            self.line2.append(sim_empty*2)
+            self.line0.append(sim_empt*2)
+            self.line1.append(sim_empt*2)
+            self.line2.append(sim_empt*2)
 
         number_in_card = random.sample(range(1, 91), 15)
         number_in_line0 = sorted(number_in_card[:5])
@@ -28,18 +29,18 @@ class Card:
             self.line1[position_in_line1[index]] = do_str_2simbol(str(number_in_line1[index]))
             self.line2[position_in_line2[index]] = do_str_2simbol(str(number_in_line2[index]))
 
-    def cross_number(self):
+    def cross_number(self, current_number, sim_cros):
         for index in range(9):
             if self.line0[index] == current_number:
-                self.line0[index] = sim_crossed*2
+                self.line0[index] = sim_cros*2
                 self.count_number -= 1
                 break
             if self.line1[index] == current_number:
-                self.line1[index] = sim_crossed*2
+                self.line1[index] = sim_cros*2
                 self.count_number -= 1
                 break
             if self.line2[index] == current_number:
-                self.line2[index] = sim_crossed*2
+                self.line2[index] = sim_cros*2
                 self.count_number -= 1
                 break
 
@@ -91,12 +92,12 @@ if __name__ == '__main__':
     pc_card = Card()
     pc_card.player_name = 'PC'
     pc_card.count_number = 15
-    pc_card.create_card()
+    pc_card.create_card(sim_empty)
 
     my_card = Card()
     my_card.player_name = input('Введите Ваше имя: ')
     my_card.count_number = 15
-    my_card.create_card()
+    my_card.create_card(sim_empty)
 
     # Создаём новый мешок с номерами
     bag = Bag()
@@ -112,11 +113,12 @@ if __name__ == '__main__':
         print('Боченок №', current_number)
         print_card(pc_card)
         print_card(my_card)
-        pc_card.cross_number()
+        pc_card.cross_number(current_number, sim_crossed)
 
         in_card = my_card.line0.count(current_number) + my_card.line1.count(current_number) + my_card.line2.count(current_number)
 
         indicator = False  # Указатель принят ли ответ
+        answer = ''
         while indicator is False:
             answer = input('Зачеркнуть номер в карточке? Ваш ответ (д/н): ').lower()
             if answer in ['да', 'д', 'y', 'yes', '1']:
