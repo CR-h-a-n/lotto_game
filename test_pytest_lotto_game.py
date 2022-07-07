@@ -50,6 +50,29 @@ class TestCard:
         assert test_card.line1 == ['__', '__', '__', '__', 'xx', '__', '__', '__', '__']
         assert test_card.line2 == ['__', '__', '__', '__', '__', '__', '__', '__', 'xx']
 
+    def test_str(self):
+        test_card = Card()
+        test_card.player_name = 'Алексей'
+        test_card.count_number = 999
+        test_card.line0 = '1'
+        test_card.line1 = '1'
+        test_card.line2 = '1'
+        assert str(test_card) == f'Имя игрока: Алексей\nКоличество незачеркнутых номеров в карточке: 999\nКарточка:\n1\n1\n1'
+        assert str(test_card) != f'Имя игрока: Алексей Количество незачеркнутых номеров в карточке: 999 Карточка: 1 1 1'
+
+    def test_eq(self):
+        test_card0 = Card()
+        test_card0.line0 = '000'
+        test_card0.line1 = '111'
+        test_card0.line2 = '222'
+        test_card1 = Card()
+        test_card1.line0 = '000'
+        test_card1.line1 = '111'
+        test_card1.line2 = '222'
+        assert test_card0 == test_card1
+        test_card1.line1 = '1111'
+        assert test_card0 != test_card1
+
 
 class TestBag:
     def test_init(self):
@@ -66,6 +89,18 @@ class TestBag:
         # проверим после get_from_bag исчезнет ли current_number из мешка
         current_number = test_bag.get_from_bag()
         assert current_number not in test_bag.numbers
+
+    def test_str(self):
+        test_bag = Bag()
+        test_bag.numbers = [1, 2, 3, 4, 5]
+        assert str(test_bag) == 'В мешке: [1, 2, 3, 4, 5]'
+
+    def test_eq(self):
+        test_bag0 = Bag()
+        test_bag1 = Bag()
+        assert test_bag0 != test_bag1
+        test_bag0.numbers = test_bag1.numbers = [1, 2, 3, 4, 5]
+        assert test_bag0 == test_bag1
 
 
 def test_do_str_2simbol():
